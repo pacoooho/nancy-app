@@ -1,0 +1,18 @@
+.tooltip {
+    display: none;
+    position: absolute;
+    font-size: 0.75em;
+    background-color: white;
+    border-style: solid;
+    border-color: gray;
+    border-width: 3px;
+    border-radius: 6px;
+  }
+  svg{
+    fill: #000;
+    width: 100px;
+    height: 100px;
+    margin: 20px;
+    display: -block;
+  }
+   
