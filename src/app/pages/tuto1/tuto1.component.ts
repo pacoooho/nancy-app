@@ -11,8 +11,8 @@ export class Tuto1Component implements OnInit {
   constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
-  //  this.renderer.setStyle(this.gMovil.nativeElement, 'display', 'none');
-
+   // this.renderer.setAttribute(this.gMovil.nativeElement, 'display', 'none');
+// 
 
   }
 
