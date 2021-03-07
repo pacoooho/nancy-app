@@ -1,5 +1,5 @@
 export interface ModosLed {
-    fijo?: number;
+    tipo?: number;
     intensidadMax?: number;
     intensidadMin: number;
     delayLed?: number;
@@ -15,8 +15,8 @@ export interface ModosLed {
     retardoMotor?: number;
   }
   export interface Modo {
-    modo?: number
+    modo?: number;    
+    // estadoBlue?: number;
+    // actualizado?: boolean;
   }
-
-
   

@@ -15,8 +15,8 @@ import { ProgressComponent } from './pages/svg/svg3/svg3.component';
 import { Svgs } from './pages/svg/svg4/svg4.component';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 
-import { Ng5SliderModule } from 'ng5-slider';
-
+// import { Ng5SliderModule } from 'ng5-slider';
+ 
 
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { ColorAlphaModule } from 'ngx-color/alpha'; // <color-alpha-picker></color-alpha-picker>
@@ -31,6 +31,7 @@ import { ColorPhotoshopModule } from 'ngx-color/photoshop'; // <color-photoshop>
 import { ColorSwatchesModule } from 'ngx-color/swatches'; // <color-swatches></color-swatches>
 import { ColorTwitterModule } from 'ngx-color/twitter'; // <color-twitter></color-twitter>
 import { ColorShadeModule } from 'ngx-color/shade'; // <color-shade-picker></color-shade-picker>
+import { ComponentesModule } from './componentes/componetes.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,9 +39,8 @@ import { ColorShadeModule } from 'ngx-color/shade'; // <color-shade-picker></col
   ],
   entryComponents: [],
   imports: [
-    Ng5SliderModule,
-
-    ColorChromeModule,
+    ComponentesModule,
+      ColorChromeModule,
 ColorCircleModule,
 ColorCompactModule,
 ColorGithubModule,

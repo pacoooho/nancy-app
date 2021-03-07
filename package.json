@@ -27,7 +27,6 @@
     "cordova-android": "^9.0.0",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
     "cordova-sqlite-storage": "^5.1.0",
-    "ng5-slider": "^1.2.6",
     "ngx-color": "^6.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
