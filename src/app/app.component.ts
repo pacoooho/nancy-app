@@ -33,64 +33,39 @@ export class AppComponent implements OnInit {
       icon: 'information-circle'
     }
   ];
-  loggedIn = false;
   dark = true;
-
-  constructor(
-     private bluetoothServicio:    BluetoohService,
-     private storage: DataLocalService,
+   constructor(
+    public bluetoothServicio: BluetoohService,
+ 
+    //  private storage: DataLocalService,
     private menu: MenuController,
     private platform: Platform,
     private router: Router,
-    //  private storage: Storage,
-      private toastCtrl: ToastController,
+    private toastCtrl: ToastController,
   ) {
+    // this.initializeApp();
+    console.log("constructor");
     this.initializeApp();
   }
 
   async ngOnInit() {
- //   this.checkLoginStatus();
-// this.listenForLoginEvents();
-
-    // this.swUpdate.available.subscribe(async res => {
-    //   const toast = await this.toastCtrl.create({
-    //     message: 'Update available!',
-    //     position: 'bottom',
-    //     buttons: [
-    //       {
-    //         role: 'cancel',
-    //         text: 'Reload'
-    //       }
-    //     ]
-    //   });
-
-    //   await toast.present();
-
-    //   toast
-    //     .onDidDismiss()
-    //     .then(() => this.swUpdate.activateUpdate())
-    //     .then(() => window.location.reload());
-    // });
+    console.log("ngOnInit");
   }
- 
+
   initializeApp() {
+    
     this.platform.ready().then(() => {
-  //    this.bluetoothServicio.conecta2("dLed");
-      // this.statusBar.styleDefault();
-      //this.splashScreen.hide();
+      console.log("initializeApp app");
+ 
     });
   }
 
-  updateLoggedInStatus(loggedIn: boolean) {
-    setTimeout(() => {
-      this.loggedIn = loggedIn;
-    }, 300);
-  }
- 
-
   openTutorial() {
     this.menu.enable(false);
-  //  this.storage.set('ion_did_tutorial', false);
+    //  this.storage.set('ion_did_tutorial', false);
     this.router.navigateByUrl('/tutorial');
   }
+
+
+
 }

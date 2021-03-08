@@ -47,7 +47,7 @@ export class ConfiguracionModosComponent implements OnInit {
   async alertTipo(index: number) {
     //console.log("tipo ", this.tipo);
     let fijoChecked, variableChecked: boolean = false;
-    if (this.tipo === 0) { fijoChecked = true; variableChecked = false; }
+    if (this.tipo === 1) { fijoChecked = true; variableChecked = false; }
     else { fijoChecked = false; variableChecked = true; }
     // console.log(this.tipo,fijoChecked,variableChecked);
     const alert = await this.alertControlador.create({
@@ -57,14 +57,14 @@ export class ConfiguracionModosComponent implements OnInit {
           name: 'radio1',
           type: 'radio',
           label: 'fijo',
-          value: [0, "fijo"],
+          value: [1, "fijo"],
           checked: fijoChecked
         },
         {
           name: 'radio2',
           type: 'radio',
           label: 'variable',
-          value: [1, "variable"],
+          value: [0, "variable"],
           checked: variableChecked
 
         }

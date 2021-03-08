@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Modo, ModosLed, ModosMotor } from '../interfaces/Modos';
 
@@ -14,18 +15,32 @@ export class DataLocalService {
   modosLedDatosLocal: ModosLed[] = [];
   modoMotorDatosLocal: ModosMotor;
   modoLocal: Modo;
+  actualizado: boolean = false;
 
 
   constructor(
-    private storage: Storage
+    private storage: Storage,
+    private platform: Platform,
+
   ) {
+    this.initializeApp();
 
     this.init();
   }
+
+  initializeApp() {
+
+    this.platform.ready().then(() => {
+      console.log("initializeApp local");
+      this.init();
+
+ 
+    });
+  } 
   async init() {
-    // await this.storage.remove('dLed');
-    // await this.storage.remove('dMotor');
-    // await this.storage.remove('dModo');
+    await this.storage.remove('dLed');
+    await this.storage.remove('dMotor');
+    await this.storage.remove('dModo');
 
     const data = await this.storage.get('dLed');
     if (data === null) {
@@ -38,6 +53,7 @@ export class DataLocalService {
 
       await this.storage.set("dModo", this.modoPredefinido);
       this.modoLocal = this.modoPredefinido;
+      this.actualizado= true;
 
       console.log("data");
     } else {
@@ -48,6 +64,7 @@ export class DataLocalService {
       console.log("led ", this.modosLedDatosLocal);
       console.log("Motor ", this.modoMotorDatosLocal);
       console.log("modo ", this.modoLocal);
+      this.actualizado= true;
 
 
     }

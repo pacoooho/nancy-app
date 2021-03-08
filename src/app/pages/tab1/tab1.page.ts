@@ -1,6 +1,6 @@
- import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { ToastController } from '@ionic/angular';
- import { Modo, ModosLed, ModosMotor } from '../../interfaces/Modos';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Platform, ToastController } from '@ionic/angular';
+import { Modo, ModosLed, ModosMotor } from '../../interfaces/Modos';
 import { BluetoohService } from '../../servicios/bluetooh.service';
 import { DataLocalService } from '../../servicios/data-local.service';
 @Component({
@@ -21,41 +21,47 @@ export class Tab1Page {
   private val: number = 0;
 
 
-  editaConfi:boolean[]= [false,false,false];
+  editaConfi: boolean[] = [false, false, false];
 
-  // dd = 35;
-   
-  // @ViewChild('modos' ,{static: false}) modos: ElementRef;
 
   constructor(
-    private blueServicio: BluetoohService,
     private localServicio: DataLocalService,
+      public blueServicio: BluetoohService,
+    
     public toastController: ToastController,
-   ) {
-    //this.getDatosblue();
-    this.getDatosLocal();
-//       setInterval(async () => {
-// // this.editaConfi= !this.editaConfi;
-// console.log("modosLedDatosLocal[0].tipo " ,this.modosLedDatosLocal[0].tipo);
-//     },1000)
+    private platform: Platform,
+
+  ) {
+    this.initializeApp();
+
+    //       setInterval(async () => {
+    // // this.editaConfi= !this.editaConfi;
+    // console.log("modosLedDatosLocal[0].tipo " ,this.modosLedDatosLocal[0].tipo);
+    //     },1000)
   }
-
-
-  ///////////////////////////////////////////////////////////////////////
+  initializeApp() {
+    this.platform.ready().then(() => {
+      console.log("initializeApp tab1");
+//   this.getDatosblue();
+   this.getDatosLocal();
+    });
+  }
   blueConecta(){
-    this.blueServicio.conecta2("dLed");
+    this.blueServicio.init("dLed");
     this.getDatosblue();
   }
+  ///////////////////////////////////////////////////////////////////////
+  
   async getDatosLocal() {
     const intervalDatosArdu = setInterval(async () => {
 
-      if (this.localServicio.modoLocal) {
+      if (this.localServicio.actualizado) {
         for (let a = 0; a <= 2; a++) {
-         await this.modosLedDatosLocal.push(this.localServicio.modosLedDatosLocal[a]);
+          await this.modosLedDatosLocal.push(this.localServicio.modosLedDatosLocal[a]);
         }
         this.modoMotorDatosLocal = this.localServicio.modoMotorDatosLocal;
         this.modoLocal = this.localServicio.modoLocal;
-        console.log("hay datos en local",this.modosLedDatosLocal );
+        console.log("hay datos en local", this.modosLedDatosLocal);
         clearInterval(intervalDatosArdu);
       } else {
         console.log("No hay datos en local");
@@ -65,13 +71,13 @@ export class Tab1Page {
 
 
   async getDatosblue() {
-this.val=0;
+    this.val = 0;
     const intervalDatosBlue = setInterval(async () => {
       this.estadoBlue = this.blueServicio.conectado;
       this.val++;
       if (this.val === 8) {
         //this.presentToast("No ha conexión");
-        clearInterval(intervalDatosBlue)
+        clearInterval(intervalDatosBlue);
       }
       console.log("buscando actualizacion");
       if (this.blueServicio.actualizado) {
@@ -81,7 +87,7 @@ this.val=0;
         this.modoMotorDatosArduino = this.blueServicio.modoMotorDatosArduino;
         this.modoArduino = this.blueServicio.modoArduino;
         console.log("tab1 actualizado desde arduino ", this.modosLedDatosArduino);
-      //  this.presentToast("Actualizado desde nancy");
+        //  this.presentToast("Actualizado desde nancy");
         clearInterval(intervalDatosBlue);
       }
     }, 1000);
@@ -91,21 +97,21 @@ this.val=0;
       message: mensaje,
       duration: 1500,
       position: "middle",
-        color: "danger",
-        cssClass: "ion-text-center"
-   });
+      color: "danger",
+      cssClass: "ion-text-center"
+    });
     toast.present();
   }
 
-/////////////////////////////////////////////////////////////////////
-edita(i:number){
-  this.editaConfi[i]= !this.editaConfi[i];
-  console.log(this.editaConfi);
-}
+  /////////////////////////////////////////////////////////////////////
+  edita(i: number) {
+    this.editaConfi[i] = !this.editaConfi[i];
+    console.log(this.editaConfi);
+  }
 
-///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
 
-cambio(){
-  console.log("cambio");
-}
+  cambio() {
+    console.log("cambio");
+  }
 }

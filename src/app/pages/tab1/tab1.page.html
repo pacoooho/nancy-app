@@ -1,4 +1,4 @@
-<app-cabecera-tabs titulo="Modos Rojo Verde Azul" estadoBlue="{{estadoBlue}}" (blueConecta)="blueConecta()">
+<app-cabecera-tabs titulo="Modos Rojo Verde Azul" estadoBlue="{{blueServicio.conectado}}" (blueConecta)="blueConecta()">
 </app-cabecera-tabs>
 <ion-content [fullscreen]="true">
     <ion-list *ngFor="let item of modosLedDatosLocal; let i = index">
