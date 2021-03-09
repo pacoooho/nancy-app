@@ -1,0 +1,13 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons  slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+     <ion-title>
+      {{titulo}} 
+    </ion-title>
+    <ion-icon slot ="end" src="{{srcBlue[estadoBlue]}}" (click)="blue()"></ion-icon>  
+
+      <ion-item>{{estadoBlue}}</ion-item>
+  </ion-toolbar>
+</ion-header>

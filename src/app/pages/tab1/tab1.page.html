@@ -1,10 +1,10 @@
-<app-cabecera-tabs titulo="Modos Rojo Verde Azul" estadoBlue="{{blueServicio.conectado}}" (blueConecta)="blueConecta()">
+<app-cabecera-tabs titulo="Modos Rojo Verde Azul" [estadoBlue]="blueServicio.conectado" (blueConecta)="blueConecta()">
 </app-cabecera-tabs>
 <ion-content [fullscreen]="true">
     <ion-list *ngFor="let item of modosLedDatosLocal; let i = index">
  
     <ion-card >
-      <app-cabecera-modos index="{{i}}" (edita)="edita(i)"></app-cabecera-modos>
+      <app-cabecera-modos [index]="i" (edita)="edita(i)"></app-cabecera-modos>
        <app-configuracion-modos 
        [modosLedDatosLocal]=  modosLedDatosLocal
        
@@ -15,12 +15,12 @@
 
       [index]="i" 
       [class.configuracion]="editaConfi[i]" 
-      editaConfi="{{editaConfi[i]}}"
+      [editaConfi]="editaConfi[i]"
       [tipo]="item.tipo"
       (tipoCambio)="cambio()" 
-      intensidadMax="{{item.intensidadMax}}"
-      intensidadMin="{{item.intensidadMin}}"
-      delayLed="{{item.delayLed}}"
+      [intensidadMax]="item.intensidadMax"
+      [intensidadMin]="item.intensidadMin"
+      [delayLed]="item.delayLed"
       >
       </app-configuracion-modos>
     </ion-card>

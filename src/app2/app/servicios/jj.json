@@ -1,0 +1,33 @@
+[
+    {
+        "fijo": "1",
+        "intensidadMax": "155",
+        "intensidadMin": "10",
+        "delayLed": "35"
+    },
+    {
+        "fijo": "0",
+        "intensidadMax": "155",
+        "intensidadMin": "10",
+        "delayLed": "35"
+    },
+    {
+        "fijo": "0",
+        "intensidadMax": "155",
+        "intensidadMin": "10",
+        "delayLed": "35"
+    },
+    {
+        "fijo": "0",
+        "intensidadMin": "10",
+        "delayLed": "35",
+        "valRojo": "255",
+        "valVerde": "255",
+        "valAzul": "255"
+    },
+    {
+        "intensidadMax": "155",
+        "intensidadMin": "10",
+        "maxDelay": "500"
+    }
+]

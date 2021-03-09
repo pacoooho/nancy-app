@@ -1,0 +1,13 @@
+
+ion-content {
+    --background: url('./seleneCara.svg') no-repeat center/cover fixed;
+    
+  }
+
+  ion-toolbar,ion-list,  ion-item{
+    --background: url('./seleneCara.svg') no-repeat center/cover fixed!important;
+    border-color: rgba(0, 0, 0, 0)!important;
+	background-color: rgba(0, 0, 0, 0)!important;
+    color: white !important; 
+   
+  }

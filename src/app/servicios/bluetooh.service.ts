@@ -19,7 +19,7 @@ export class BluetoohService {
   modoMotorDatosArduino: ModosMotor;
   modoArduino: Modo;
 
-  public  g: any[] = [];
+  public g: any[] = [];
 
   constructor(
     private bluetoothSerial: BluetoothSerial,
@@ -28,7 +28,7 @@ export class BluetoohService {
     private localServicio: DataLocalService,
 
   ) {
-     this.initializeApp();
+    this.initializeApp();
 
 
   }
@@ -37,11 +37,49 @@ export class BluetoohService {
 
     this.platform.ready().then(() => {
       console.log("initializeApp blue");
-      this.init('dLed')
-
+        this.init('dLed');
  
     });
-  } 
+  }
+
+  // actualizaArduino(datos: string) {
+
+
+  //   this.actualizado = false;
+
+  //   const interval = setInterval(async () => {
+  //     if (this.conectado === 0) {
+  //       this.bluetoothSerial.connect('98:D3:32:70:7C:95').subscribe(res => {
+  //         console.log("blue", res);
+  //         this.conectado = 1;
+  //       })
+  //     }
+  //     else if (this.conectado === 1) {
+  //       this.bluetoothSerial.isConnected().then(_ => {
+  //         this.bluetoothSerial.write(datos).then(s => {
+  //           this.bluetoothSerial.available().then(async f => {
+  //             this.bluetoothSerial.readUntil("*").then(dato => {
+
+  //               console.log("recibe " + dato);this.conectado=2;
+  //             }).catch(eeee => {
+  //               console.log("eeee", eeee);
+  //             });
+  //           })
+  //         })
+  //       }).catch(e => {
+  //         this.presentToast("No conectado", "danger")
+  //         console.log("e", e);
+  //       })
+  //     }
+
+  //   }, 1000);
+
+
+
+
+  // }
+
+
   init(datos: string) {
     this.val = 0;
     this.conectado = 0;
@@ -49,6 +87,7 @@ export class BluetoohService {
     const interval = setInterval(async () => {
       this.val++;
       console.log("datos " + datos + this.val);
+     if (this.bluetoothSerial.isConnected()&& this.conectado === 0){this.conectado=1;}
       if (this.conectado === 0) {
         console.log("conecta 0");
         if (this.val === 4) {
@@ -67,7 +106,7 @@ export class BluetoohService {
           }
         );
       }
-      else if (this.conectado === 1 && this.bluetoothSerial.enable()) {
+      else if (this.conectado === 1 && this.bluetoothSerial.isConnected()) {
         this.conectado = 2;
         console.log("envio" + datos);
 
@@ -81,7 +120,7 @@ export class BluetoohService {
           this.conectado = 1;
           clearInterval(interval);
         }
-        else if (this.modoMotorDatosArduino.motor !== undefined && datos === "dMotor") {
+        else if (    datos === "dMotor") {
           // console.log("dMotor ");
           this.init("dModo");
           this.conectado = 1;
@@ -97,7 +136,7 @@ export class BluetoohService {
         }
 
       }
-    }, 1000);
+    }, 500);
 
   }
 
@@ -130,12 +169,13 @@ export class BluetoohService {
         return;
       } else {
         console.log("Nohay nada");
+        this.conectado = 1
         return;
       }
     });
   }
 
-  conicidenciasLocalArduino(){
+  conicidenciasLocalArduino() {
     const interv = setInterval(async () => {
       if (this.actualizado && this.localServicio.actualizado) {
         console.log("actualizado todo");
@@ -148,7 +188,7 @@ export class BluetoohService {
             } else { r = { [d]: false }; }
             f = Object.assign(r, f);
           }
-        this.g.push(f)
+          this.g.push(f)
         }
         console.log(this.g);
         clearInterval(interv);
@@ -168,7 +208,9 @@ export class BluetoohService {
       message: mensaje,
       duration: 2000,
       position: "middle",
-      color
+      color,
+      cssClass: "ion-text-center"
+
     });
     toast.present();
   }

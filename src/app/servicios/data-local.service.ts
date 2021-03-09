@@ -8,7 +8,7 @@ import { Modo, ModosLed, ModosMotor } from '../interfaces/Modos';
 })
 export class DataLocalService {
 
-  private modosLedPredefinido = [{ "tipo": 1, "intensidadMax": 255, "intensidadMin": 30, "delayLed": 45 }, { "tipo": 0, "intensidadMax": 155, "intensidadMin": 10, "delayLed": 35 }, { "tipo": 0, "intensidadMax": 155, "intensidadMin": 10, "delayLed": 35 }, { "tipo": 0, "intensidadMin": 10, "delayLed": 35, "valRojo": 255, "valVerde": 255, "valAzul": 255 }, { "intensidadMax": 155, "intensidadMin": 10, "maxDelay": 1000 }];
+  private modosLedPredefinido = [{ "tipo": 0, "intensidadMax": 155, "intensidadMin": 10, "delayLed": 35 }, { "tipo": 0, "intensidadMax": 155, "intensidadMin": 10, "delayLed": 35 }, { "tipo": 0, "intensidadMax": 155, "intensidadMin": 10, "delayLed": 35 }, { "tipo": 0, "intensidadMin": 10, "delayLed": 35, "valRojo": 255, "valVerde": 255, "valAzul": 255 }, { "intensidadMax": 155, "intensidadMin": 10, "maxDelay": 1000 }];
   private modosMotorPredefinido = { "motor": 2, "voltajeMotor": 100, "retardoMotor": 10 };
   private modoPredefinido = { "modo": 1 };
 
@@ -38,9 +38,9 @@ export class DataLocalService {
     });
   } 
   async init() {
-    await this.storage.remove('dLed');
-    await this.storage.remove('dMotor');
-    await this.storage.remove('dModo');
+    // await this.storage.remove('dLed');
+    // await this.storage.remove('dMotor');
+    // await this.storage.remove('dModo');
 
     const data = await this.storage.get('dLed');
     if (data === null) {

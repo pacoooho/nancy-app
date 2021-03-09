@@ -45,6 +45,7 @@ export class CabeceraModosComponent implements OnInit {
 
   }
   actualizaArduino(index: number, cambio: string) {
+
     let envio: string;
     if (cambio === "mo") {
       index++;
@@ -80,19 +81,19 @@ export class CabeceraModosComponent implements OnInit {
         })
       })
     }).catch(e => {
-      this.presentToast("No conectado")
+      this.presentToast("No conectado","danger")
       console.log("e", e);
     })
 
 
 
   }
-  async presentToast(mensaje: string) {
+  async presentToast(mensaje: string,color: string) {
     const toast = await this.toastController.create({
       message: mensaje,
       duration: 1500,
       position: "middle",
-      color: "danger",
+      color,
       cssClass: "ion-text-center"
     });
     toast.present();

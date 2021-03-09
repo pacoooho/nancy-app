@@ -19,9 +19,13 @@ import { ColorPhotoshopModule } from 'ngx-color/photoshop'; // <color-photoshop>
 import { ColorSwatchesModule } from 'ngx-color/swatches'; // <color-swatches></color-swatches>
 import { ColorTwitterModule } from 'ngx-color/twitter'; // <color-twitter></color-twitter>
 import { ColorShadeModule } from 'ngx-color/shade'; // <color-shade-picker></color-shade-picker>
+import { CabeceraTabsComponent } from '../../componentes/cabecera-tabs/cabecera-tabs.component';
+import { ComponentesModule } from '../../componentes/componetes.module';
+import { HighlightDirective } from './highlight.directive';
 
 @NgModule({
   imports: [
+    ComponentesModule,
     ColorAlphaModule,
     ColorSketchModule,
     ColorChromeModule,
@@ -40,6 +44,6 @@ import { ColorShadeModule } from 'ngx-color/shade'; // <color-shade-picker></col
     FormsModule,
      Tab2PageRoutingModule
   ],
-  declarations: [Tab2Page]
+  declarations: [Tab2Page, HighlightDirective]
 })
 export class Tab2PageModule {}

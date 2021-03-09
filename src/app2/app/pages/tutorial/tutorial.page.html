@@ -4,15 +4,21 @@
       <ion-button color='primary' (click)="startApp()" [hidden]="!showSkip">Skip</ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> 
 
 <ion-content fullscreen="true">
   <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="false">
-    <ion-slide>
-      <img src="assets/img/ica-slidebox-img-1.png" class="slide-image" />
+    
+
+      <ion-slide>
+        <!-- <svg-widget></svg-widget> -->
+        <!-- <iframe src="assets/img/movil2.svg" frameborder="0"></iframe> -->
+      <!-- <iframe #s src="assets/img/movil2.svg" class="slide-image" /> -->
+      <app-tuto1></app-tuto1>
+      <!-- <img src="assets/img/movil2.svg" class="slide-image" /> -->
       <h2 class="slide-title">
         Welcome to
-        <b>ICA</b>
+        <b>ICA</b> 
       </h2>
       <p>
         The

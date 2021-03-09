@@ -4,15 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { CabeceraModosComponent } from './cabecera-modos/cabecera-modos.component';
 import { CabeceraTabsComponent } from './cabecera-tabs/cabecera-tabs.component';
 import { ConfiguracionModosComponent } from './configuracion-modos/configuracion-modos.component';
- 
+  
  
 
 @NgModule({
   declarations: [
      CabeceraModosComponent,
 CabeceraTabsComponent,
-ConfiguracionModosComponent
-  ],
+ConfiguracionModosComponent,
+   ],
   imports: [
      CommonModule,
     IonicModule,
@@ -20,7 +20,7 @@ ConfiguracionModosComponent
    exports:[
     CabeceraModosComponent,
     CabeceraTabsComponent,
-    ConfiguracionModosComponent
-   ]
+    ConfiguracionModosComponent,
+    ]
 })
 export class ComponentesModule { }
