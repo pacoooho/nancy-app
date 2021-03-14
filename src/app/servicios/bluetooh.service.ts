@@ -37,82 +37,83 @@ export class BluetoohService {
 
     this.platform.ready().then(() => {
       console.log("initializeApp blue");
-        this.init('dLed');
+       // this.init('dLed');
  
     });
   }
+ conexion():any{
+   this.bluetoothSerial.isConnected()
+   .then(c=>{return this.conectado= 1;})
+   .catch(_=>{return this.conectado= 0;})
 
-  // actualizaArduino(datos: string) {
+  }
+compruebaConexion(){
+  const intervalConexion = setInterval(_=>{
+   this.conectado =  this.conexion();console.log(this.conectado);
+  },1000)
+}
 
+init2(){
+  const intervalconexion = setInterval(async () => {
+    this.val++;
+    if (this.val === 6) {
+      this.conectado=0;
+      this.presentToast("No ha conexión", "danger");
+      clearInterval(intervalconexion);
+    }
+    if ( this.conectado){clearInterval(intervalconexion);return;}
+    this.bluetoothSerial.connect('98:D3:32:70:7C:95').subscribe(
+      res => {
+         this.conectado = 1;
+        //  this.compruebaConexion();
+         clearInterval(intervalconexion);
+         this.presentToast("Conectado a Nancy","succes");
+       },
+      err => {
+        this.conectado = 0;
+        //  console.log(err);
+      }
+    );
+  },1000);
 
-  //   this.actualizado = false;
-
-  //   const interval = setInterval(async () => {
-  //     if (this.conectado === 0) {
-  //       this.bluetoothSerial.connect('98:D3:32:70:7C:95').subscribe(res => {
-  //         console.log("blue", res);
-  //         this.conectado = 1;
-  //       })
-  //     }
-  //     else if (this.conectado === 1) {
-  //       this.bluetoothSerial.isConnected().then(_ => {
-  //         this.bluetoothSerial.write(datos).then(s => {
-  //           this.bluetoothSerial.available().then(async f => {
-  //             this.bluetoothSerial.readUntil("*").then(dato => {
-
-  //               console.log("recibe " + dato);this.conectado=2;
-  //             }).catch(eeee => {
-  //               console.log("eeee", eeee);
-  //             });
-  //           })
-  //         })
-  //       }).catch(e => {
-  //         this.presentToast("No conectado", "danger")
-  //         console.log("e", e);
-  //       })
-  //     }
-
-  //   }, 1000);
-
-
-
-
-  // }
-
+}
 
   init(datos: string) {
     this.val = 0;
     this.conectado = 0;
-    this.actualizado = false;
+    // this.actualizado = false;
     const interval = setInterval(async () => {
       this.val++;
       console.log("datos " + datos + this.val);
-     if (this.bluetoothSerial.isConnected()&& this.conectado === 0){this.conectado=1;}
+      if ( this.conectado===3)clearInterval(interval);
+   //  if (this.bluetoothSerial.isConnected()&& this.conectado === 0){this.conectado=1;}
       if (this.conectado === 0) {
         console.log("conecta 0");
-        if (this.val === 4) {
+        if (this.val === 6) {
           this.presentToast("No ha conexión", "danger")
           clearInterval(interval);
         }
         this.bluetoothSerial.connect('98:D3:32:70:7C:95').subscribe(
           res => {
-            console.log("res");
-            this.conectado = 1;
-            this.lectura = "";
-          },
+             this.conectado = 1;
+             if (this.actualizado){
+               this.conectado=3;
+              // this.compruebaConexion();
+             }
+           },
           err => {
             this.conectado = 0;
             //  console.log(err);
           }
         );
       }
-      else if (this.conectado === 1 && this.bluetoothSerial.isConnected()) {
+      else if (this.conectado === 1 && !this.actualizado) {
         this.conectado = 2;
         console.log("envio" + datos);
 
         await this.bluetoothSerial.write(datos + "*");
       }
-      else if (this.conectado === 2) {
+      else if (this.conectado === 2 ) {
         await this.available(datos);
         if (this.modosLedDatosArduino.length && datos === "dLed") {
           //console.log("modosLedDatosArduino");
@@ -133,6 +134,8 @@ export class BluetoohService {
           this.presentToast("Actualizado desde Nancy", "success")
           this.conicidenciasLocalArduino();
           clearInterval(interval);
+          this.compruebaConexion();
+
         }
 
       }

@@ -20,15 +20,15 @@ export class CabeceraModosComponent implements OnInit {
 
   nombre: string[] = ["Rojo", "Verde", "Azul"];
 
-  srcSinc:string[]=[
-    "../../../assets/img/sync-circle-outline0.svg",
-    "../../../assets/img/sync-circle-outline1.svg",
-    "../../../assets/img/sync-circle-outline1.svg",
-    "../../../assets/img/sync-circle-outline2.svg"
-  ]
+  // srcSinc:string[]=[
+  //   "../../../assets/img/sync-circle-outline0.svg",
+  //   "../../../assets/img/sync-circle-outline1.svg",
+  //   "../../../assets/img/sync-circle-outline1.svg",
+  //   "../../../assets/img/sync-circle-outline2.svg"
+  // ]
   @Input() index: number;
   @Input() estadoSinc: number=1;
-
+@Input() color:string;
   @Output() edita = new EventEmitter();
   //@Output() actualiza = new EventEmitter();
   //@Output() cambia = new EventEmitter();
@@ -47,32 +47,31 @@ export class CabeceraModosComponent implements OnInit {
   actualizaArduino(index: number, cambio: string) {
 
     let envio: string;
-    if (cambio === "mo") {
-      index++;
-      envio = cambio + " " + index + "*";
-    } else if (cambio === "l") {
-     let i= +index+1;
-      envio = cambio + " " +
-      i+" "+
+   
+     let i= index+1;
+      envio = cambio + " " + i + " " +
         this.localServicio.modosLedDatosLocal[index].tipo + " " +
         this.localServicio.modosLedDatosLocal[index].intensidadMax + " " +
         this.localServicio.modosLedDatosLocal[index].intensidadMin + " " +
         this.localServicio.modosLedDatosLocal[index].delayLed + "*";
-    }
+   
      
     this.bluetoothSerial.isConnected().then(_ => {
       this.bluetoothSerial.write(envio).then(s => {
         this.bluetoothSerial.available().then(async f => {
           this.bluetoothSerial.read().then(dato => {
-            if (cambio === "mo") {
-              this.blueServicio.modoArduino.modo = this.localServicio.modoLocal.modo = index;
+            // if (cambio === "mo") {
+            //    this.localServicio.modoLocal.modo = index;
 
-              this.localServicio.guardaLedModoLocal();
-             // console.log("cambio", this.localServicio.modoLocal.modo, this.blueServicio.modoArduino.modo);
-              console.log( this.localServicio.modoLocal, this.blueServicio.modoArduino);
-            }
-            else if (cambio === "l") {
-
+            //   this.localServicio.guardaLedModoLocal();
+            //  // console.log("cambio", this.localServicio.modoLocal.modo, this.blueServicio.modoArduino.modo);
+            //   console.log( this.localServicio.modoLocal, this.blueServicio.modoArduino);
+            // }
+            // else
+             if (cambio === "l") {
+               this.localServicio.modoLocal.modo=index;
+               console.log(this.localServicio.modoLocal.modo);
+              this.localServicio.guardaLedModoLocal();this.localServicio.guardaLedLocal();
             }
             console.log("recibe " + dato);
           }).catch(eeee => {

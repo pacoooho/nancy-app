@@ -4,23 +4,29 @@ import { IonicModule } from '@ionic/angular';
 import { CabeceraModosComponent } from './cabecera-modos/cabecera-modos.component';
 import { CabeceraTabsComponent } from './cabecera-tabs/cabecera-tabs.component';
 import { ConfiguracionModosComponent } from './configuracion-modos/configuracion-modos.component';
-  
- 
+import { ColorTituloDirective } from './color-titulo.directive';
+import { FormsModule } from '@angular/forms';
+
+
 
 @NgModule({
-  declarations: [
-     CabeceraModosComponent,
-CabeceraTabsComponent,
-ConfiguracionModosComponent,
+   declarations: [
+      ColorTituloDirective,
+      CabeceraModosComponent,
+      CabeceraTabsComponent,
+      ConfiguracionModosComponent,
    ],
-  imports: [
-     CommonModule,
-    IonicModule,
+   imports: [
+      CommonModule,
+      IonicModule,
+      FormsModule
    ],
-   exports:[
-    CabeceraModosComponent,
-    CabeceraTabsComponent,
-    ConfiguracionModosComponent,
-    ]
+   exports: [
+      ColorTituloDirective,
+
+      CabeceraModosComponent,
+      CabeceraTabsComponent,
+      ConfiguracionModosComponent,
+   ]
 })
 export class ComponentesModule { }

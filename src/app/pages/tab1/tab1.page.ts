@@ -19,13 +19,13 @@ export class Tab1Page {
 
   estadoBlue: number = 0;
   private val: number = 0;
-
+color:string="rgb(78,90,56)";
 
   editaConfi: boolean[] = [false, false, false];
 
 
   constructor(
-    private localServicio: DataLocalService,
+    public localServicio: DataLocalService,
       public blueServicio: BluetoohService,
     
     public toastController: ToastController,
@@ -33,22 +33,35 @@ export class Tab1Page {
 
   ) {
     this.initializeApp();
-
+ 
     //       setInterval(async () => {
     // // this.editaConfi= !this.editaConfi;
     // console.log("modosLedDatosLocal[0].tipo " ,this.modosLedDatosLocal[0].tipo);
     //     },1000)
   }
+
+  
   initializeApp() {
     this.platform.ready().then(() => {
       console.log("initializeApp tab1");
 //   this.getDatosblue();
    this.getDatosLocal();
+   this.compruebaConexion();
     });
   }
   blueConecta(){
-    this.blueServicio.init("dLed");
-    this.getDatosblue();
+    //this.blueServicio.init("dLed");
+  //  this.getDatosblue();
+  if ( this.blueServicio.conectado===0){
+    this.blueServicio.init2();
+  }
+
+  }
+
+  compruebaConexion(){
+    const intervalConexion = setInterval(_=>{
+      this.estadoBlue= this.blueServicio.conexion();
+    },1000)
   }
   ///////////////////////////////////////////////////////////////////////
   
@@ -70,28 +83,30 @@ export class Tab1Page {
   }
 
 
-  async getDatosblue() {
-    this.val = 0;
-    const intervalDatosBlue = setInterval(async () => {
-      this.estadoBlue = this.blueServicio.conectado;
-      this.val++;
-      if (this.val === 8) {
-        //this.presentToast("No ha conexión");
-        clearInterval(intervalDatosBlue);
-      }
-      console.log("buscando actualizacion");
-      if (this.blueServicio.actualizado) {
-        for (let a = 0; a <= 2; a++) {
-          await this.modosLedDatosArduino.push(this.blueServicio.modosLedDatosArduino[a]);
-        }
-        this.modoMotorDatosArduino = this.blueServicio.modoMotorDatosArduino;
-        this.modoArduino = this.blueServicio.modoArduino;
-        console.log("tab1 actualizado desde arduino ", this.modosLedDatosArduino);
-        //  this.presentToast("Actualizado desde nancy");
-        clearInterval(intervalDatosBlue);
-      }
-    }, 1000);
-  }
+  // async getDatosblue() {
+  //   this.val = 0;
+  //   const intervalDatosBlue = setInterval(async () => {
+  //    // if (this.blueServicio.actualizado) return;
+
+  //     this.estadoBlue = this.blueServicio.conectado;
+  //     this.val++;
+  //     if (this.val === 12) {
+  //       //this.presentToast("No ha conexión");
+  //       clearInterval(intervalDatosBlue);
+  //     }
+  //     console.log("buscando actualizacion");
+  //     if (this.blueServicio.actualizado) {
+  //       for (let a = 0; a <= 2; a++) {
+  //         await this.modosLedDatosArduino.push(this.blueServicio.modosLedDatosArduino[a]);
+  //       }
+  //       this.modoMotorDatosArduino = this.blueServicio.modoMotorDatosArduino;
+  //       this.modoArduino = this.blueServicio.modoArduino;
+  //       console.log("tab1 actualizado desde arduino ", this.modosLedDatosArduino);
+  //       //  this.presentToast("Actualizado desde nancy");
+  //       clearInterval(intervalDatosBlue);
+  //     }
+  //   }, 1000);
+  // }
   async presentToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,

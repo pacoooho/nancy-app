@@ -73,9 +73,9 @@ export class DataLocalService {
     this.storage.set("dLed",this.modosLedDatosLocal);
   }
   guardaMotorLocal(){
-    this.storage.set("dMotor",this.modosLedDatosLocal);
+    this.storage.set("dMotor",this.modoMotorDatosLocal);
   }  
   guardaLedModoLocal(){
-    this.storage.set("dModo",this.modosLedDatosLocal);
+    this.storage.set("dModo",this.modoLocal);
   }
 }

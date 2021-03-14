@@ -8,7 +8,7 @@ import { ColorGithubModule } from 'ngx-color/github'; // <color-github></color-g
 import { ColorHueModule } from 'ngx-color/hue'; // <color-hue-picker></color-hue-picker>
 import { ColorMaterialModule } from 'ngx-color/material'; // <color-material></color-material>
 import { ColorPhotoshopModule } from 'ngx-color/photoshop'; // <color-photoshop></color-photoshop>
- import { ColorSliderModule } from 'ngx-color/slider'; // <color-slider></color-slider>
+import { ColorSliderModule } from 'ngx-color/slider'; // <color-slider></color-slider>
 import { ColorSwatchesModule } from 'ngx-color/swatches'; // <color-swatches></color-swatches>
 import { ColorTwitterModule } from 'ngx-color/twitter'; // <color-twitter></color-twitter>
 import { ColorShadeModule } from 'ngx-color/shade'; // <color-shade-picker></color-shade-picker>
@@ -23,24 +23,27 @@ import { BluetoohService } from 'src/app/servicios/bluetooh.service';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-color:any=255;
-state:any={ r: 251, g: 51, b: 51 }
-srcBlue:string[]=[
-  "../../../assets/img/bluetooth-outline0.svg",
-  "../../../assets/img/bluetooth-outline1.svg",
-  "../../../assets/img/bluetooth-outline2.svg",
-  "../../../assets/img/bluetooth-outline3.svg"
-]
-srcSinc:string[]=[
-  "../../../assets/img/sync-circle-outline0.svg",
-  "../../../assets/img/sync-circle-outline1.svg",
-  "../../../assets/img/sync-circle-outline1.svg",
-  "../../../assets/img/sync-circle-outline2.svg"
-]
+  color:string="rgb(78,90,56)";
+  state: any = { r: 251, g: 51, b: 51 }
+  srcBlue: string[] = [
+    "../../../assets/img/bluetooth-outline0.svg",
+    "../../../assets/img/bluetooth-outline1.svg",
+    "../../../assets/img/bluetooth-outline2.svg",
+    "../../../assets/img/bluetooth-outline3.svg"
+  ]
+  srcSinc: string[] = [
+    "../../../assets/img/sync-circle-outline0.svg",
+    "../../../assets/img/sync-circle-outline1.svg",
+    "../../../assets/img/sync-circle-outline1.svg",
+    "../../../assets/img/sync-circle-outline2.svg"
+  ]
 
-editaConfi:boolean=false;
-editaRetardo:boolean=false;
-editaIntMin:boolean=false;
+  editaConfi: boolean = false;
+  editaRetardo: boolean = false;
+  editaIntMin: boolean = false;
+
+  estadoBlue: number = 0;
+
   constructor(
     private bluetoothSerial: BluetoothSerial,
     public toastController: ToastController,
@@ -61,31 +64,34 @@ editaIntMin:boolean=false;
     private colorSwatches: ColorSwatchesModule,
     private colorTwitter: ColorTwitterModule,
     private colorShade: ColorShadeModule,
-    ) {}
-    changeComplete(event:any){
-      //event.preventDefault();
-      if (event.cancelable) {
-        event.preventDefault ();
-        }
-//console.log("change", event.color.rgb);
-this.localServicio.modosLedDatosLocal[3].valRojo = 
-this.blueServicio.modosLedDatosArduino[3].valRojo = event.color.rgb.r;
-this.localServicio.modosLedDatosLocal[3].valVerde = 
-this.blueServicio.modosLedDatosArduino[3].valVerde = event.color.rgb.g;
-this.localServicio.modosLedDatosLocal[3].valAzul = 
-this.blueServicio.modosLedDatosArduino[3].valAzul = event.color.rgb.b;
-this.localServicio.guardaLedLocal();
+  ) { }
 
-console.log(this.localServicio.modosLedDatosLocal[3].valRojo,this.localServicio.modosLedDatosLocal[3].valVerde,this.localServicio.modosLedDatosLocal[3].valAzul);
+  compruebaConexion(){
+    const intervalConexion = setInterval(_=>{
+      this.estadoBlue= this.blueServicio.conexion();
+    },1000)
+  }
+  changeComplete(event: any) {
+    //event.preventDefault();
+    if (event.cancelable) {
+      event.preventDefault();
     }
+    //console.log("change", event.color.rgb);
+    this.localServicio.modosLedDatosLocal[3].valRojo = event.color.rgb.r;
+    this.localServicio.modosLedDatosLocal[3].valVerde = event.color.rgb.g;
+    this.localServicio.modosLedDatosLocal[3].valAzul = event.color.rgb.b;
+    this.localServicio.guardaLedLocal();
 
-    editaModo() {
-      console.log("edita");
-      this.editaConfi=!this.editaConfi;
-     // this.edita.emit()
-    }
+    console.log(this.localServicio.modosLedDatosLocal[3].valRojo, this.localServicio.modosLedDatosLocal[3].valVerde, this.localServicio.modosLedDatosLocal[3].valAzul);
+  }
 
-    
+  editaModo() {
+    console.log("edita");
+    this.editaConfi = !this.editaConfi;
+    // this.edita.emit()
+  }
+
+
   async alertTipo(index: number) {
     //console.log("tipo ", this.tipo);
     let fijoChecked, variableChecked: boolean = false;
@@ -123,7 +129,7 @@ console.log(this.localServicio.modosLedDatosLocal[3].valRojo,this.localServicio.
         }, {
           text: 'Ok',
           handler: (data: any) => {
-           // this.tipo = data[0];
+            // this.tipo = data[0];
             this.localServicio.modosLedDatosLocal[index].tipo = data[0];
             this.localServicio.guardaLedLocal();
             console.log('Confirm Ok', data);
@@ -136,82 +142,78 @@ console.log(this.localServicio.modosLedDatosLocal[3].valRojo,this.localServicio.
 
     //this.tipoCambio.emit([this.index, this.tipo])
   }
-    actualizaModo(index: number) {
-  
-  
-  
-    }
+  actualizaModo(index: number) {
 
-    cambioRetardo(event: any, index:number){
-      console.log(event);
-      this.localServicio.modosLedDatosLocal[index].delayLed= event.detail.value;
-      this.localServicio.guardaLedLocal();
+
+
+  }
+
+  cambioRetardo(event: any, index: number) {
+    console.log(event);
+    this.localServicio.modosLedDatosLocal[index].delayLed = event.detail.value;
+    this.localServicio.guardaLedLocal();
+
+  }
+  cambioIntensidadMin(event: any, index: number) {
+    console.log(event);
+    this.localServicio.modosLedDatosLocal[index].intensidadMin = event.detail.value;
+    this.localServicio.guardaLedLocal();
+
+  }
+  actualizaArduino(cambio: string) {
+
+    let envio: string;
       
-        }
-        cambioIntensidadMin(event: any, index:number){
-          console.log(event);
-          this.localServicio.modosLedDatosLocal[index].intensidadMin= event.detail.value;
-          this.localServicio.guardaLedLocal();
-          
-            }
-    actualizaArduino(cambio: string) {
-  
-      let envio: string;
-      if (cambio === "mo") {
-   //     index++;
-        envio = cambio + " 4*";
-      } else if (cambio === "RGB") {
-        //{"tipo":0,"intensidadMin":10,"delayLed":35,"valRojo":255,"valVerde":255,"valAzul":255}
-       envio = cambio + " " +
-        4+" "+
-          this.localServicio.modosLedDatosLocal[3].tipo + " " +
-          this.localServicio.modosLedDatosLocal[3].intensidadMin + " " +
-          this.localServicio.modosLedDatosLocal[3].delayLed + " " +
-          this.localServicio.modosLedDatosLocal[3].valRojo + " " +
-          this.localServicio.modosLedDatosLocal[3].valVerde + " " +
-          this.localServicio.modosLedDatosLocal[3].valAzul + "*";
-      }
-       
-      this.bluetoothSerial.isConnected().then(_ => {
-        this.bluetoothSerial.write(envio).then(s => {
-          this.bluetoothSerial.available().then(async f => {
-            this.bluetoothSerial.read().then(dato => {
-              if (cambio === "mo") {
-                this.blueServicio.modoArduino.modo = this.localServicio.modoLocal.modo = 3;
-  
-                this.localServicio.guardaLedModoLocal();
-               // console.log("cambio", this.localServicio.modoLocal.modo, this.blueServicio.modoArduino.modo);
-                console.log( this.localServicio.modoLocal, this.blueServicio.modoArduino);
-              }
-              else if (cambio === "RGB") {
-  
-              }
-              console.log("recibe " + dato);
-            }).catch(eeee => {
-              console.log("eeee", eeee);
-            });
-          })
-        })
-      }).catch(e => {
-        this.presentToast("No conectado","danger")
-        console.log("e", e);
-      })
-  
-  
-    }
+      //{"tipo":0,"intensidadMin":10,"delayLed":35,"valRojo":255,"valVerde":255,"valAzul":255}
+      envio = cambio + " " +
+        4 + " " +
+        this.localServicio.modosLedDatosLocal[3].tipo + " " +
+        this.localServicio.modosLedDatosLocal[3].intensidadMin + " " +
+        this.localServicio.modosLedDatosLocal[3].delayLed + " " +
+        this.localServicio.modosLedDatosLocal[3].valRojo + " " +
+        this.localServicio.modosLedDatosLocal[3].valVerde + " " +
+        this.localServicio.modosLedDatosLocal[3].valAzul + "*";
+   
 
-    blueConecta(){
-     // this.blueServicio.init("dLed");
-     //this.getDatosblue();
+    this.bluetoothSerial.isConnected().then(_ => {
+      this.bluetoothSerial.write(envio).then(s => {
+        this.bluetoothSerial.available().then(async f => {
+          this.bluetoothSerial.read().then(dato => {
+             if (cambio === "RGB") {
+              this.localServicio.modoLocal.modo=3;
+              console.log(envio);
+              console.log(this.localServicio.modoLocal.modo,this.localServicio.modosLedDatosLocal[3]);
+             this.localServicio.guardaLedModoLocal();this.localServicio.guardaLedLocal();
+            }
+            console.log("recibe " + dato);
+          }).catch(eeee => {
+            console.log("eeee", eeee);
+          });
+        })
+      })
+    }).catch(e => {
+      this.presentToast("No conectado", "danger")
+      console.log("e", e);
+    })
+
+
+  }
+
+  blueConecta() {
+    // this.blueServicio.init("dLed");
+    //this.getDatosblue();
+    if ( this.blueServicio.conectado===0){
+      this.blueServicio.init2();
     }
-    async presentToast(mensaje: string,color: string) {
-      const toast = await this.toastController.create({
-        message: mensaje,
-        duration: 1500,
-        position: "middle",
-        color,
-        cssClass: "ion-text-center"
-      });
-      toast.present();
-    }
+  }
+  async presentToast(mensaje: string, color: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 1500,
+      position: "middle",
+      color,
+      cssClass: "ion-text-center"
+    });
+    toast.present();
+  }
 }

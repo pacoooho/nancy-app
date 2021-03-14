@@ -2,12 +2,18 @@
   <ion-toolbar>
     <ion-buttons  slot="start">
       <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-     <ion-title>
-      {{titulo}} 
+    </ion-buttons >
+     <ion-title
+      [style.color]="color"
+      >
+      {{nombreModo[titulo]}} 
     </ion-title>
+    <ion-icon  slot="end" src="{{srcSinc[blueServicio.conectado]}}" 
+    (click)="actualizaArduino('motor')"
+    >
+   </ion-icon> 
     <ion-icon slot ="end" src="{{srcBlue[estadoBlue]}}" (click)="blue()"></ion-icon>  
 
-      <ion-item>{{estadoBlue}}</ion-item>
+      <!-- <ion-item>{{titulo}}</ion-item> -->
   </ion-toolbar>
 </ion-header>

@@ -32,6 +32,7 @@ import { ColorSwatchesModule } from 'ngx-color/swatches'; // <color-swatches></c
 import { ColorTwitterModule } from 'ngx-color/twitter'; // <color-twitter></color-twitter>
 import { ColorShadeModule } from 'ngx-color/shade'; // <color-shade-picker></color-shade-picker>
 import { ComponentesModule } from './componentes/componetes.module';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,7 @@ import { ComponentesModule } from './componentes/componetes.module';
   ],
   entryComponents: [],
   imports: [
-    ComponentesModule,
+   
       ColorChromeModule,
 ColorCircleModule,
 ColorCompactModule,
@@ -53,6 +54,9 @@ ColorTwitterModule,
 ColorShadeModule,
     ColorAlphaModule,
     ColorSketchModule,
+
+    CommonModule,
+    ComponentesModule,
      FormsModule,
     IonicStorageModule.forRoot(),
     BrowserModule,

@@ -36,7 +36,7 @@ progress=79;
 
   startApp() {
     this.router
-      .navigateByUrl('/tabs/modo13', { replaceUrl: true })
+      .navigateByUrl('/tabs/modo5', { replaceUrl: true })
       .then(() => this.storage.set('ion_did_tutorial', true));
     // this.renderer.setStyle(this.s.nativeElement, 'display', 'none');
 

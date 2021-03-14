@@ -2,8 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Modo, ModosLed, ModosMotor } from 'src/app/interfaces/Modos';
 import { DataLocalService } from 'src/app/servicios/data-local.service';
-
-@Component({
+ @Component({
   selector: 'app-configuracion-modos',
   templateUrl: './configuracion-modos.component.html',
   styleUrls: ['./configuracion-modos.component.scss'],
@@ -100,14 +99,14 @@ export class ConfiguracionModosComponent implements OnInit {
   }
   cambioIntensidad(event: any, index:number) {
   //  console.log(event);
-    this.modosLedDatosLocal[index].intensidadMax=this.intensidadMax = event.detail.value.upper;
-    this.modosLedDatosLocal[index].intensidadMin = this.intensidadMin = event.detail.value.lower;
-    this.localServicio.guardaLedLocal();
+    this.localServicio.modosLedDatosLocal[index].intensidadMax=this.intensidadMax = event.detail.value.upper;
+    this.localServicio.modosLedDatosLocal[index].intensidadMin = this.intensidadMin = event.detail.value.lower;
+   this.localServicio.guardaLedLocal();
   }
   cambioRetardo(event: any, index:number){
 console.log(event);
-this.modosLedDatosLocal[index].delayLed=this.delayLed = event.detail.value;
-this.localServicio.guardaLedLocal();
+this.localServicio.modosLedDatosLocal[index].delayLed=this.delayLed = event.detail.value;
+ this.localServicio.guardaLedLocal();
 
   }
 }
