@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { ColorAlphaModule } from 'ngx-color/alpha'; // <color-alpha-picker></color-alpha-picker>
 import { ColorChromeModule } from 'ngx-color/chrome'; // <color-chrome></color-chrome>
@@ -22,8 +22,8 @@ import { BluetoohService } from 'src/app/servicios/bluetooh.service';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
-  color:string="rgb(78,90,56)";
+export class Tab2Page implements OnInit {
+  color:string;
   state: any = { r: 251, g: 51, b: 51 }
   srcBlue: string[] = [
     "../../../assets/img/bluetooth-outline0.svg",
@@ -65,9 +65,14 @@ export class Tab2Page {
     private colorTwitter: ColorTwitterModule,
     private colorShade: ColorShadeModule,
   ) { }
-
+ async ngOnInit(){
+   this.color=`rgb(${await this.localServicio.modosLedDatosLocal[3].valRojo},
+    ${await this.localServicio.modosLedDatosLocal[3].valVerde},
+    ${await this.localServicio.modosLedDatosLocal[3].valAzul})`
+ }
   compruebaConexion(){
     const intervalConexion = setInterval(_=>{
+      console.log(this.color);
       this.estadoBlue= this.blueServicio.conexion();
     },1000)
   }
@@ -193,6 +198,10 @@ export class Tab2Page {
       })
     }).catch(e => {
       this.presentToast("No conectado", "danger")
+      this.localServicio.modoLocal.modo=3;
+      console.log(envio);
+      console.log(this.localServicio.modoLocal.modo,this.localServicio.modosLedDatosLocal[3]);
+      this.localServicio.guardaLedModoLocal();this.localServicio.guardaLedLocal();
       console.log("e", e);
     })
 

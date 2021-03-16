@@ -77,7 +77,11 @@ export class Tab3Page {
         })
       })
     }).catch(e => {
-      this.presentToast("No conectado", "danger")
+      this.presentToast("No conectado", "danger");
+      this.localServicio.modoLocal.modo=4;
+      console.log(envio);
+      console.log(this.localServicio.modoLocal.modo,this.localServicio.modosLedDatosLocal[4]);
+     this.localServicio.guardaLedModoLocal();this.localServicio.guardaLedLocal();
       console.log("e", e);
     })
 

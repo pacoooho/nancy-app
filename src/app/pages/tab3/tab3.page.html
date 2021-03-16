@@ -1,4 +1,4 @@
-<app-cabecera-tabs [color]="color" [titulo]="localServicio.modoLocal.modo || 4" [estadoBlue]="blueServicio.conectado"
+<app-cabecera-tabs [color]="color" [titulo]="localServicio.modoLocal.modo" [estadoBlue]="blueServicio.conectado"
   (blueConecta)="blueConecta()">
 </app-cabecera-tabs>
 
@@ -8,7 +8,7 @@
       <ion-item>
         <ion-img slot="start" src="../../../assets/img/medallon.svg" (click)="actualizaArduino('Disco')">
         </ion-img>
-        <ion-label style="font-size: '30px';">RGB</ion-label>
+        <ion-label style="font-size: '30px';">Disco</ion-label>
         <ion-icon class="dd" src="../../../assets/img/construct-outline.svg" (click)="editaModo()">
         </ion-icon>
         <!-- <ion-icon src="{{srcSinc[blueServicio.conectado]}}" (click)="actualizaArduino('RGB')">

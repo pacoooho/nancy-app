@@ -81,6 +81,9 @@ export class CabeceraModosComponent implements OnInit {
       })
     }).catch(e => {
       this.presentToast("No conectado","danger")
+      this.localServicio.modoLocal.modo=index;
+      console.log(this.localServicio.modoLocal.modo);
+      this.localServicio.guardaLedModoLocal();this.localServicio.guardaLedLocal();
       console.log("e", e);
     })
 

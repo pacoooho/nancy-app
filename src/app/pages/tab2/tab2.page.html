@@ -1,4 +1,4 @@
-<app-cabecera-tabs [color]="color" [titulo]="localServicio.modoLocal.modo || 3" [estadoBlue]="blueServicio.conectado" (blueConecta)="blueConecta()">
+<app-cabecera-tabs [color]="color" [titulo]="localServicio.modoLocal.modo" [estadoBlue]="blueServicio.conectado" (blueConecta)="blueConecta()">
 </app-cabecera-tabs>
 
 <ion-content [fullscreen]="true" >
@@ -22,7 +22,7 @@
           </ion-item>
 
           <ion-item>
-            <color-hue-picker (onChangeComplete)="changeComplete($event)"></color-hue-picker>hue-picker
+            <color-hue-picker [color]="color" (onChangeComplete)="changeComplete($event)"></color-hue-picker>hue-picker
           </ion-item>
 
           <ion-item>
